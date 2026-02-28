@@ -7,7 +7,7 @@ public class UniversalSet {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		System.out.println("Hey!");
 	}
 	
 	// Stores elements in fixed order

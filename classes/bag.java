@@ -15,6 +15,7 @@ public class bag {
     // Constructor: from map of counts
     public bag(UniversalSet u, Map<String, Integer> initialCounts) {
         // TODO: implement
+    
     }
 
     // Get count of element
