@@ -8,7 +8,7 @@ public class UniversalSet {
 
     
 
-    // Fixed ordered list of elements
+    // Ordered list of elements
     private List<String> elements;
 
     // Fast lookup map: element name -> index
@@ -16,8 +16,8 @@ public class UniversalSet {
 
     /*
      * Constructor
-     * - Requires at least 10 elements
-     * - No duplicates allowed
+     * Requires at least 10 elements
+     * No duplicates allowed
      */
     public UniversalSet(List<String> elements) {
 
