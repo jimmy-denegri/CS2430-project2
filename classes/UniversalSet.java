@@ -4,9 +4,6 @@ import java.util.*;
 
 public class UniversalSet {
 	
-	
-
-    
 
     // Ordered list of elements
     private List<String> elements;
