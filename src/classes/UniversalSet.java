@@ -47,6 +47,11 @@ public class UniversalSet {
     public List<String> getElements() {
         return new ArrayList<>(elements);
     }
+    
+    public Map getMap()
+    {
+        return new HashMap<String, Integer>(indexMap);
+    }
 
     // Returns true if element exists in universe
     public boolean contains(String elementName) {
