@@ -16,7 +16,6 @@ public class UniversalSet {
 		// Testing out A's bit strings and elements
 		System.out.println("A bit string: " + A.toBitString());
 		System.out.println("A elements: " + A.toElementListing());
-		
 
 		// Testing out for NOT(A)
 		System.out.println("NOT(A) bit string: " + A.complement().toBitString());

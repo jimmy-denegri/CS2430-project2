@@ -6,7 +6,6 @@ public class bitSet {
 
 	private UniversalSet u; // Reference to universal set
 	private boolean[] bits; // Boolean array representation
-	
 
 	// Constructor: empty set
 	public bitSet(UniversalSet u) {
