@@ -1,52 +1,87 @@
 package classes;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UniversalSet {
-	
+
+//<<<<<<< HEAD
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("Hey!");
+		List<String> uniList = Arrays.asList("SLCC", "UVU", "BYU", "Weber", "USU", "U of U");
+
+		UniversalSet u = new UniversalSet(uniList);
+		bitSet A = bitSet.fromElements(u, Arrays.asList("SLCC", "UVU", "Weber"));
+
+		System.out.println(uniList.toString());
+
+		// Testing out A's bit strings and elements
+		System.out.println("A bit string: " + A.toBitString());
+		System.out.println("A elements: " + A.toElementListing());
+
+		// Testing out for NOT(A)
+		System.out.println("NOT(A) bit string: " + A.complement().toBitString());
+		System.out.println("NOT(A) elements: " + A.complement().toElementListing());
 	}
-	
+
 	// Stores elements in fixed order
-    private List<String> elements;
-    
+//=======
 
-    // Constructor
-    public UniversalSet(List<String> elements) {
-        // TODO: implement
-    }
+	// Ordered list of elements
+//>>>>>>> branch 'main' of https://github.com/jimmy-denegri/CS2430-project2.git
+	private List<String> elements;
 
-    // Returns number of elements
-    public int size() {
-        // TODO: implement
-        return 0;
-    }
+	// Fast lookup map: element name -> index
+	private Map<String, Integer> indexMap;
 
-    // Returns list of elements
-    public List<String> getElements() {
-        // TODO: implement
-        return null;
-    }
+	/*
+	 * Constructor Requires at least 10 elements No duplicates allowed
+	 */
+	public UniversalSet(List<String> elements) {
 
-    // Returns index of element
-    public int indexOf(String elementName) {
-        // TODO: implement
-        return 0;
-    }
+		if (elements.size() < 10) {
+			System.out.println("Universal set must contain at least 10 elements.");
+		}
 
-    // Checks if element exists
-    public boolean contains(String elementName) {
-        // TODO: implement
-        return false;
-    }
+		this.elements = new ArrayList<>();
+		this.indexMap = new HashMap<>();
 
-    @Override
-    public String toString() {
-        // TODO: implement
-        return "";
-    }
+		for (int i = 0; i < elements.size(); i++) {
 
+			String name = elements.get(i);
+
+			if (indexMap.containsKey(name)) {
+				System.out.println("Duplicate element: " + name);
+			}
+
+			this.elements.add(name);
+			this.indexMap.put(name, i);
+		}
+	}
+
+	// Returns number of elements
+	public int size() {
+		return elements.size();
+	}
+
+	// Returns list of elements
+	public List<String> getElements() {
+		return new ArrayList<>(elements);
+	}
+
+	// Returns true if element exists in universe
+	public boolean contains(String elementName) {
+		return indexMap.containsKey(elementName);
+	}
+
+	// Returns index of element in universe
+	public int indexOf(String elementName) {
+
+		Integer index = indexMap.get(elementName);
+
+		return index;
+	}
+
+	@Override
+	public String toString() {
+		return "U=" + elements;
+	}
 }
