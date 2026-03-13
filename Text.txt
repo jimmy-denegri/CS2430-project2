@@ -1,0 +1,61 @@
+UniversalSet
+
+PRIVATE elements : List of String
+PRIVATE indexMap : Map<String, Integer>
+
+  CONSTRUCTOR UniversalSet(inputElements)
+
+        IF size of inputElements < 10 THEN
+            PRINT "Universal set must contain at least 10 elements"
+        ENDIF
+
+        elements ← empty list
+        indexMap ← empty map
+
+        FOR i from 0 to size(inputElements) - 1
+
+            name ← inputElements[i]
+
+            IF indexMap contains key name THEN
+                PRINT "Duplicate element: " + name
+            ENDIF
+
+            ADD name to elements
+            PUT (name, i) into indexMap
+
+        ENDFOR
+
+    END CONSTRUCTOR
+
+    FUNCTION size()
+        RETURN number of items in elements
+    END FUNCTION
+
+    FUNCTION getElements()
+        RETURN copy of elements
+    END FUNCTION
+
+    FUNCTION contains(elementName)
+
+        IF indexMap contains key elementName THEN
+            RETURN true
+        ELSE
+            RETURN false
+        ENDIF
+
+    END FUNCTION
+
+    FUNCTION indexOf(elementName)
+
+        index ← value mapped to elementName in indexMap
+        RETURN index
+
+    END FUNCTION
+
+    FUNCTION toString()
+
+        RETURN "U=" + elements
+
+    END FUNCTION
+
+END CLASS
