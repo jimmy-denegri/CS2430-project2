@@ -78,10 +78,14 @@ public class Bag {
         return new Bag(u, tempMap); // return a new bag with the same universal set as this one, and the mappings calculated above
     }
 
-    // Multiset Sum 
+    // Multiset Sum		Benjamnin Shaw
     public Bag mSum(Bag other) {
-        // TODO: implement
-        return null;
+    	Map<String, Integer> mSum = new HashMap<>();	// The stored sum of the two Maps in the Bags
+    	for (String el : u.getElements()) {		// Looping through the elements
+    		
+    		mSum.put(el, getCount(element) + other.getCount(element)); 
+    	}
+        return new Bag(u, mSum);
     }
 
     // Print counts
