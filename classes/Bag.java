@@ -48,8 +48,40 @@ public class Bag {
 
     // Multiset Intersection 
     public Bag mIntersection(Bag other) {
-        // TODO: implement
-        return null;
+        
+        requireSameUniverse(other);
+
+        // Get a list of all possible elements from the universal set.
+        // We iterate through the entire universe so we can compare counts
+        // for every possible element.
+        List<String> uniElements = u.getElements();
+
+        // Temporary map that will store the resulting counts for the intersection.
+        // This will eventually be used to construct the resulting Bag.
+        Map<String, Integer> tempMap = new HashMap<>();
+
+        // Loop through every element in the universal set
+        for (String element : uniElements) {
+
+            // Get how many times this element appears in the current bag (this)
+            int thisCount = this.getCount(element);
+
+            // Get how many times this element appears in the other bag
+            int otherCount = other.getCount(element);
+
+            // In a multiset intersection, the multiplicity of each element
+            // is the MINIMUM count between the two bags.
+            // Example: A: apple(3),B: apple(1)
+            // Intersection: apple(1)
+            int resultCount = Math.min(thisCount, otherCount);
+
+            // Store the result count in the temporary map
+            // The key is the element name, and the value is the calculated multiplicity
+            tempMap.put(element, resultCount);
+        }
+
+        // Create and return a new Bag object that uses the same universal set and the counts that were calculated in tempMap.
+        return new Bag(u, tempMap);
     }
 
     // Multiset Difference
