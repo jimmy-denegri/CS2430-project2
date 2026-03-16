@@ -87,8 +87,29 @@ public class BitSet {
 
 	// Intersection
 	public BitSet intersection(BitSet other) {
-		// TODO: implement
-		return null;
+	    
+	    // Create a new boolean array that will store the result of the intersection.
+	    // It has the same length as the current bit array because every position
+	    // corresponds to an element in the universal set.
+	    boolean[] r = new boolean[bits.length];
+
+	    // Loop through every position in the bit array.
+	    // Each index represents a specific element in the universal set.
+	    for (int i = 0; i < bits.length; i++) {
+	        
+	        // Intersection for ordinary sets means the element must exist in BOTH sets.
+	        // If both bits are true, the result is true.
+	        // If either is false, the result is false.
+	    	if (this.bits[i] && other.bits[i]) {
+	    	    r[i] = true;
+	    	} else {
+	    	    r[i] = false;
+	    	}
+	    }
+
+	    // Create and return a new BitSet object using the same universal set
+	    // and the result bit array we just calculated.
+	    return new BitSet(u, r);
 	}
 
 	// Difference
