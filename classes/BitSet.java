@@ -79,10 +79,37 @@ public class BitSet {
 		return new BitSet(u, resultBits);
 	}
 
-	// Union
+	// Returns the raw boolean array for direct comparison (used in tests)
+	public boolean[] getBoolBits() {
+		return Arrays.copyOf(bits, bits.length);
+	}
+
+	// Union = A ∪ B
+	// An element is in the union if it belongs to A, B, or both.
+	// For each position, the result bit is true if either bit is true (logical OR).
 	public BitSet union(BitSet other) {
-		// TODO: implement
-		return null;
+
+		// Create a new boolean array to hold the result of the union.
+		// Same length as the current bit array since both sets share the same universe.
+		boolean[] r = new boolean[bits.length];
+
+		// Loop through every position in the bit array.
+		// Each index corresponds to a specific element in the universal set.
+		for (int i = 0; i < bits.length; i++) {
+
+			// Union means the element must exist in AT LEAST ONE of the two sets.
+			// If either bit is true, the result is true.
+			// Only false if both bits are false.
+			if (this.bits[i] || other.bits[i]) {
+				r[i] = true;
+			} else {
+				r[i] = false;
+			}
+		}
+
+		// Create and return a new BitSet using the same universal set
+		// and the union result array calculated above.
+		return new BitSet(u, r);
 	}
 
 	// Intersection

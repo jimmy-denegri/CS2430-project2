@@ -40,10 +40,42 @@ public class Bag {
         counts.put(elementName, count);
     }
 
-    // Multiset Union 
+    // Multiset Union = A ∪ B
+    // For each element, the multiplicity in the union is the MAXIMUM count between the two bags.
+    // Example: A: apple(3), B: apple(5) → Union: apple(5)
     public Bag mUnion(Bag other) {
-        // TODO: implement
-        return null;
+
+        requireSameUniverse(other);
+
+        // Get the full list of elements from the universal set so we can
+        // compare counts for every possible element, not just ones with nonzero counts.
+        List<String> uniElements = u.getElements();
+
+        // Temporary map to hold the resulting multiplicity for each element.
+        // Will be used to construct the returned Bag.
+        Map<String, Integer> tempMap = new HashMap<>();
+
+        // Loop through every element in the universal set.
+        for (String element : uniElements) {
+
+            // Get how many times this element appears in this bag.
+            int thisCount = this.getCount(element);
+
+            // Get how many times this element appears in the other bag.
+            int otherCount = other.getCount(element);
+
+            // In a multiset union, the multiplicity of each element is the
+            // MAXIMUM count between the two bags.
+            // An element not present in one bag contributes a count of 0 for that bag.
+            int resultCount = Math.max(thisCount, otherCount);
+
+            // Store the result count mapped to this element.
+            tempMap.put(element, resultCount);
+        }
+
+        // Create and return a new Bag using the same universal set
+        // and the maximum-count mappings calculated above.
+        return new Bag(u, tempMap);
     }
 
     // Multiset Intersection 
