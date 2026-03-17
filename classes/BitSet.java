@@ -139,10 +139,24 @@ public class BitSet {
 	    return new BitSet(u, r);
 	}
 
-	// Difference
+	// Difference		Benjamin Shaw + Ahren
 	public BitSet difference(BitSet other) {
-		// TODO: implement
-		return null;
+		
+		// get the other bits for difference
+		boolean[] otherBits = other.getBoolBits();
+		// Making a temporary array to put into a BitSet
+		boolean[] difference = new boolean[bits.length];
+		
+		// Looping throught the arrays to get the differecne
+		for (int i = 0; i < bits.length; i++) {
+			if (bits[i] && otherBits[i]) {	// Getting the case when both bits are true
+				difference[i] = false;
+			} else {
+				difference[i] = bits[i];	// All other cases just look at the bits	(a) out of (a - b)
+			}
+			
+		}
+		return new BitSet(difference);
 	}
 
 	// Symmetric Difference
