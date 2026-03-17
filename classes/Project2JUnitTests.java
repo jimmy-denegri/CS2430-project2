@@ -16,13 +16,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import classes.UniversalSet;
 import classes.BitSet;
 import classes.Bag;
+import classes.Bag;
+import classes.BitSet;
+import classes.UniversalSet;
 import java.util.HashMap;
 import java.util.Map;
-
-
 
 /**
  *
@@ -32,6 +34,55 @@ public class Project2JUnitTests
 {
     
     private final static UniversalSet uni = new UniversalSet( new ArrayList<>( List.of("a", "b", "c", "d", "e", "f", "g", "h", "i", "j")) );;
+    
+    public static String printBitSet(String header, BitSet set1, BitSet set2, boolean[] expected, BitSet result)
+    {
+        
+        String set1Bits = toBinString(set1.getBoolBits());
+        String set2Bits = toBinString(set2.getBoolBits());
+        String expectedBits = toBinString(expected);
+        String resultBits = toBinString(result.getBoolBits());
+        
+        return String.format("\t %s\nSet1     : %s\nSet2     : %s\nExpecting: %s\nResult   : %s\n", header, set1Bits, set2Bits, expectedBits, resultBits);
+        
+    }
+    
+    public static String toBinString(boolean[] array)
+    {
+        StringBuilder bld = new StringBuilder();
+        
+        for(boolean el : array)
+        {
+            if(el)
+            {
+                bld.append("1");
+            }
+            
+            else
+            {
+                bld.append("0");
+            }
+        }
+        
+        return bld.toString();
+    }
+    
+    public static String printmSet(String header, Bag set1, Bag set2, int[] expectedCounts, Bag result)
+    {
+        StringBuilder bld = new StringBuilder();
+        
+        ArrayList<String> universe = new ArrayList<>(result.getUniverse());
+        
+        bld.append("\t" + header + "\n");
+        bld.append("| Element | Set 1 | Set 2 | Expected | Result |\n");
+        for(int i = 0; i < expectedCounts.length; i++)
+        {
+            bld.append(String.format("|    %s    |  %2d   |  %2d   |    %2d    |   %2d   |\n",
+            universe.get(i), set1.getCount(universe.get(i)), set2.getCount(universe.get(i)), expectedCounts[i], result.getCount(universe.get(i))));   
+        }
+        
+        return bld.toString();
+    }
     
     public Project2JUnitTests()
     {
@@ -79,7 +130,7 @@ public class Project2JUnitTests
         BitSet set2 = new BitSet(uni, second);
         BitSet result = set1.union(set2);
         
-        System.out.printf("Set1: %s\nSet2: \nExpecting: %s\nResult: %s\n", set1.getBoolBits().toString(), set2.getBoolBits().toString(), expected.toString(), result.getBoolBits().toString() );
+        System.out.println(printBitSet("testUnionNoOverlap", set1, set2, expected, result) + "\n");
         
         assertArrayEquals(expected, result.getBoolBits());      
     }
@@ -99,7 +150,7 @@ public class Project2JUnitTests
         BitSet set2 = new BitSet(uni, second);
         BitSet result = set1.union(set2);
         
-        System.out.printf("Set1: %s\nSet2: \nExpecting: %s\nResult: %s\n", set1.getBoolBits().toString(), set2.getBoolBits().toString(), expected.toString(), result.getBoolBits().toString() );
+        System.out.println(printBitSet("testUnionOverlap", set1, set2, expected, result) + "\n");
         
         assertArrayEquals(expected, result.getBoolBits());
     }
@@ -119,8 +170,8 @@ public class Project2JUnitTests
         
         BitSet result = set1.complement();
         
-        System.out.printf("Set: %s\nExpected: %s\nResult: %s\n", set1.getBoolBits().toString(), expected.toString(), result.getBoolBits().toString() );
-        
+        System.out.println(printBitSet("testNet", set1, set1, expected, result) + "\n");
+         
         assertArrayEquals(expected, result.getBoolBits());
     }
     
@@ -139,7 +190,7 @@ public class Project2JUnitTests
         BitSet set2 = new BitSet(uni, second);
         BitSet result = set1.intersection(set2);
         
-        System.out.printf("Set1: %s\nSet2: \nExpecting: %s\nResult: %s\n", set1.getBoolBits().toString(), set2.getBoolBits().toString(), expected.toString(), result.getBoolBits().toString() );
+        System.out.println(printBitSet("testIntersectionNoOverlap", set1, set2, expected, result) + "\n");
         
         assertArrayEquals(expected, result.getBoolBits());
         
@@ -160,7 +211,7 @@ public class Project2JUnitTests
         BitSet set2 = new BitSet(uni, second);
         BitSet result = set1.intersection(set2);
         
-        System.out.printf("Set1: %s\nSet2: \nExpecting: %s\nResult: %s\n", set1.getBoolBits().toString(), set2.getBoolBits().toString(), expected.toString(), result.getBoolBits().toString() );
+        System.out.println(printBitSet("testIntersectionWithOverlap", set1, set2, expected, result) + "\n");
         
         assertArrayEquals(expected, result.getBoolBits());
         
@@ -181,7 +232,7 @@ public class Project2JUnitTests
         BitSet set2 = new BitSet(uni, second);
         BitSet result = set1.difference(set2);
         
-        System.out.printf("Set1: %s\nSet2: \nExpecting: %s\nResult: %s\n", set1.getBoolBits().toString(), set2.getBoolBits().toString(), expected.toString(), result.getBoolBits().toString() );
+        System.out.println(printBitSet("testDifferenceNoOverlap", set1, set2, expected, result) + "\n");
         
         assertArrayEquals(expected, result.getBoolBits());
     }
@@ -202,7 +253,7 @@ public class Project2JUnitTests
         BitSet set2 = new BitSet(uni, second);
         BitSet result = set1.difference(set2);
         
-        System.out.printf("Set1: %s\nSet2: \nExpecting: %s\nResult: %s\n", set1.getBoolBits().toString(), set2.getBoolBits().toString(), expected.toString(), result.getBoolBits().toString() );
+        System.out.println(printBitSet("testDiferenceOverlap", set1, set2, expected, result) + "\n");
         
         assertArrayEquals(expected, result.getBoolBits());
     }
@@ -223,7 +274,7 @@ public class Project2JUnitTests
         BitSet set2 = new BitSet(uni, second);
         BitSet result = set1.symDifference(set2);
         
-        System.out.printf("Set1: %s\nSet2: \nExpecting: %s\nResult: %s\n", set1.getBoolBits().toString(), set2.getBoolBits().toString(), expected.toString(), result.getBoolBits().toString() );
+        System.out.println(printBitSet("testSymDifferenceNoOverlap", set1, set2, expected, result) + "\n");
         
         assertArrayEquals(expected, result.getBoolBits());
     }
@@ -243,7 +294,7 @@ public class Project2JUnitTests
         BitSet set2 = new BitSet(uni, second);
         BitSet result = set1.symDifference(set2);
         
-        System.out.printf("Set1: %s\nSet2: \nExpecting: %s\nResult: %s\n", set1.getBoolBits().toString(), set2.getBoolBits().toString(), expected.toString(), result.getBoolBits().toString() );
+        System.out.println(printBitSet("testSymDifferenceOverlap", set1, set2, expected, result) + "\n");
         
         assertArrayEquals(expected, result.getBoolBits());
     }
@@ -304,6 +355,8 @@ public class Project2JUnitTests
         
         */
         
+        int[] expectedCounts = new int[] {3,3,1,5,4,0,0,0,0,0};
+        
         map1.put("a", 3);
         map1.put("b", 3);
         map1.put("c", 1);
@@ -316,7 +369,7 @@ public class Project2JUnitTests
         
         Bag result = bag1.mUnion(bag2);
         
-        
+        System.out.println(printmSet("testmSetUnionNoOverlap", bag1, bag2, expectedCounts, result)+ "\n");
         
         assertEquals(3, result.getCount("a"));
         assertEquals(3, result.getCount("b"));
@@ -388,6 +441,9 @@ public class Project2JUnitTests
         
         */
         
+        int[] expectedCounts = new int[] {3,10,1,5,4,0,0,0,0,0};
+        
+        
         map1.put("a", 3);
         map1.put("b", 3);
         map1.put("c", 1);
@@ -401,6 +457,7 @@ public class Project2JUnitTests
         
         Bag result = bag1.mUnion(bag2);
         
+        System.out.println(printmSet("testmSetUnionOverlap", bag1, bag2, expectedCounts, result)+ "\n");
         
         
         assertEquals(3, result.getCount("a"));
@@ -471,6 +528,9 @@ public class Project2JUnitTests
         
         */
         
+        int[] expectedCounts = new int[] {0,0,0,0,0,0,0,0,0,0};
+         
+         
         map1.put("a", 3);
         map1.put("b", 3);
         map1.put("c", 1);
@@ -482,6 +542,9 @@ public class Project2JUnitTests
         Bag bag2 = new Bag(uni, map2);
         
         Bag result = bag1.mIntersection(bag2);
+        
+        System.out.println(printmSet("testmSetIntersectionNoOverlap", bag1, bag2, expectedCounts, result)+ "\n");
+        
         
         assertEquals(0, result.getCount("a"));
         assertEquals(0, result.getCount("b"));
@@ -551,6 +614,9 @@ public class Project2JUnitTests
         
         */
         
+        int[] expectedCounts = new int[] {0,3,0,0,0,0,0,0,0,0};
+        
+        
         map1.put("a", 3);
         map1.put("b", 3);
         map1.put("c", 1);
@@ -563,6 +629,8 @@ public class Project2JUnitTests
         Bag bag2 = new Bag(uni, map2);
         
         Bag result = bag1.mIntersection(bag2);
+        
+        System.out.println(printmSet("testmSetIntersectionOverlap", bag1, bag2, expectedCounts, result)+ "\n");
         
         assertEquals(0, result.getCount("a"));
         assertEquals(3, result.getCount("b"));
@@ -632,6 +700,9 @@ public class Project2JUnitTests
         j 0
         
         */
+         
+        int[] expectedCounts = new int[] {3,3,1,0,0,0,0,0,0,0};
+         
         
         map1.put("a", 3);
         map1.put("b", 3);
@@ -644,6 +715,9 @@ public class Project2JUnitTests
         Bag bag2 = new Bag(uni, map2);
         
         Bag result = bag1.mDifference(bag2);
+        
+        System.out.println(printmSet("testmSetDiffNoOverlap", bag1, bag2, expectedCounts, result)+ "\n");
+        
         
         assertEquals(3, result.getCount("a"));
         assertEquals(3, result.getCount("b"));
@@ -713,6 +787,9 @@ public class Project2JUnitTests
         
         */
         
+        int[] expectedCounts = new int[] {3,0,1,0,0,0,0,0,0,0};
+        
+        
         map1.put("a", 3);
         map1.put("b", 3);
         map1.put("c", 1);
@@ -725,6 +802,8 @@ public class Project2JUnitTests
         Bag bag2 = new Bag(uni, map2);
         
         Bag result = bag1.mDifference(bag2);
+        
+        System.out.println(printmSet("testmSetDiffOverlapNegative", bag1, bag2, expectedCounts, result)+ "\n");
         
         assertEquals(3, result.getCount("a"));
         assertEquals(0, result.getCount("b"));
@@ -794,6 +873,9 @@ public class Project2JUnitTests
         
         */
         
+        int[] expectedCounts = new int[] {3,2,1,0,0,0,0,0,0,0};
+        
+        
         map1.put("a", 3);
         map1.put("b", 3);
         map1.put("c", 1);
@@ -807,7 +889,7 @@ public class Project2JUnitTests
         
         Bag result = bag1.mDifference(bag2);
         
-        
+        System.out.println(printmSet("testmSetDiffOverlapPositive", bag1, bag2, expectedCounts, result)+ "\n");
         
         assertEquals(3, result.getCount("a"));
         assertEquals(2, result.getCount("b"));
@@ -876,6 +958,9 @@ public class Project2JUnitTests
         
         */
         
+        int[] expectedCounts = new int[] {3,3,1,5,4,0,0,0,0,0};
+         
+         
         map1.put("a", 3);
         map1.put("b", 3);
         map1.put("c", 1);
@@ -887,6 +972,8 @@ public class Project2JUnitTests
         Bag bag2 = new Bag(uni, map2);
         
         Bag result = bag1.mSum(bag2);
+        
+        System.out.println(printmSet("testmSetSumNoOverlap", bag1, bag2, expectedCounts, result)+ "\n");
         
         assertEquals(3, result.getCount("a"));
         assertEquals(3, result.getCount("b"));
@@ -956,6 +1043,9 @@ public class Project2JUnitTests
         
         */
         
+        int[] expectedCounts = new int[] {3,13,1,5,4,0,0,0,0,0};
+        
+        
         map1.put("a", 3);
         map1.put("b", 3);
         map1.put("c", 1);
@@ -968,6 +1058,8 @@ public class Project2JUnitTests
         Bag bag2 = new Bag(uni, map2);
         
         Bag result = bag1.mSum(bag2);
+        
+        System.out.println(printmSet("testmSetSumOverlap", bag1, bag2, expectedCounts, result)+ "\n");
         
         assertEquals(3, result.getCount("a"));
         assertEquals(13, result.getCount("b"));

@@ -189,4 +189,9 @@ public class Bag {
 			throw new IllegalArgumentException("Both bags must use the same UniversalSet object,");
     }
     
+     public List<String> getUniverse()
+    {
+        return u.getElements();
+    }
+    
 }
