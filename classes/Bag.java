@@ -147,7 +147,7 @@ public class Bag {
     	Map<String, Integer> mSum = new HashMap<>();	// The stored sum of the two Maps in the Bags
     	for (String el : u.getElements()) {		// Looping through the elements
     		
-    		mSum.put(el, getCount(element) + other.getCount(element)); 
+    		mSum.put(el, getCount(el) + other.getCount(el)); 
     	}
         return new Bag(u, mSum);
     }
