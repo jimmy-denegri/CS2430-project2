@@ -156,7 +156,7 @@ public class BitSet {
 			}
 			
 		}
-		return new BitSet(difference);
+		return new BitSet(u,difference);
 	}
 
 	// Symmetric Difference
